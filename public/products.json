@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Turner Square Arm Leather Sofa",
+    "price": 2999,
+    "description": "Don't sacrifice style for comfort. With exquisit craftsmanship and a timeless look, we made sure Turner was also sink-in soft. Choose from our favorite top-grain leathers, with or without nailheads, in a range of silhouettes perfect for your space – get ready to love this piece for life.",
+    "sku": "594-54-9502",
+    "mediaUrl": "https://res.cloudinary.com/dtram9qiy/image/upload/v1656167020/my-upload/pnnyqpd4le6uuym4g5cs.jpg"
+  },
+  {
+    "name": "Tyler Leather Square Arm Recliner",
+    "price": 1899,
+    "description": "The sophisticated profile of the Tyler Leather Collection features details like end caps on the arms and square legs that complement the graphic frame. This square arm recliner mixes well with other styles while adding a clean, updated look to a room.",
+    "sku": "868-50-9482",
+    "mediaUrl": "https://res.cloudinary.com/dtram9qiy/image/upload/v1656167394/my-upload/sms40sgthx3oqnbs2nsu.jpg"
+  },
+  {
+    "name": "Kaplan Reclaimed Wood Lift-Top Coffee Table",
+    "price": 1099,
+    "description": "Get ready for a new favorite. With hidden storage and a hinged top that lifts so you can work on a laptop or set up a board game, the Kaplan Reclaimed Wood Lift-Top Coffee Table will become the center of activity in your home. The dramatic custom hasp and metal braces were inspired by an antique trunk found in India. It’s crafted entirely with reclaimed wood and finished with a water-based wash, for a unique look that’s environmentally friendly.",
+    "sku": "534-20-2675",
+    "mediaUrl": "https://res.cloudinary.com/dtram9qiy/image/upload/v1656167633/my-upload/kyyyx4tdhoumgp2sqr7p.jpg"
+  },
+  {
+    "name": "Benchwright 36 Lift-Top Coffee Table",
+    "price": 799,
+    "description": "Inspired by an early 20th-century worktable that belonged to our designer’s great-grandfather, the Benchwright Collection honors the strength and simplicity of rustic-industrial design. This coffee table features a hinged top that lifts to reveal hidden storage and can double as a desk or impromptu dinner table. You’ll also enjoy the hidden storage space inside, statement hardware and a hand-applied finish that highlights each intentional saw mark and groove across the wood’s naturally occurring grain.",
+    "sku": "797-94-5844",
+    "mediaUrl": "https://res.cloudinary.com/dtram9qiy/image/upload/v1656167768/my-upload/m1v4i0choy8rssqwua91.jpg"
+  },
+  {
+    "name": "Fort Extending Dining Table",
+    "price": 1999,
+    "description": "A reinterpretation of antique European refectory tables, our Fort Collection exudes timeless appeal. Crafted of wood with oak veneers and a rich, dark finish, the dining table features trestle legs and a metal stretcher supporting its substantial top plus an extendable design that graciously makes room for more.",
+    "sku": "803-74-3669",
+    "mediaUrl": "https://res.cloudinary.com/dtram9qiy/image/upload/v1656168229/my-upload/xnosh6ouai6uppnk04ec.jpg"
+  },
+  {
+    "name": "Aaron Dining Chair",
+    "price": 349,
+    "description": "Skilled artisans craft our iconic Aaron dining chairs from solid hardwood, carefully joining the X-shaped back by hand for precise symmetry. The contoured seats and curved backs offer subtle flared details.",
+    "sku": "234-56-6575",
+    "mediaUrl": "https://res.cloudinary.com/dtram9qiy/image/upload/v1656168365/my-upload/ziddrma0d9nziharouao.jpg"
+  },
+  {
+    "name": "Torrey All-Weather Wicker Sectional",
+    "price": 2399,
+    "description": "6-Piece Sectional Set includes: 1 Corner Chair, 3 Armless Chairs, 1 Left-Arm Chair and 1 Right-Arm Chair. Hand-woven from durable synthetic material that replicates the look and feel of wicker, but is remarkably resistant to sun, rain, heat and cold.",
+    "sku": "204-74-3402",
+    "mediaUrl": "https://res.cloudinary.com/dtram9qiy/image/upload/v1656168457/my-upload/ol3fnzyhcymjaqa2lgjx.jpg"
+  },
+  {
+    "name": "Indio FSC® Eucalyptus Storage Bench",
+    "price": 799,
+    "description": "Clean lines, a compact profile and customizable designs help our Indio Collection fit in anywhere. This storage bench keeps odds and ends (think gardening tools, toys or cushions) neatly stowed and is crafted from sustainable FSC® eucalyptus with a Weathered Gray finish for a relaxed, sun-drenched vibe.",
+    "sku": "150-37-2137",
+    "mediaUrl": "https://res.cloudinary.com/dtram9qiy/image/upload/v1656168769/my-upload/x29cbu3zjlz3qyfw5zan.jpg"
+  }
+]

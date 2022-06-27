@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+  .navIcon {
+    @apply h-7 w-7 text-gray-900 group-hover:text-blue-500 transition-colors duration-150 ease-out sm:group-hover:text-inherit
+  }
+  .navLink {
+    @apply font-medium hidden sm:inline group-hover:text-blue-500 transition-colors duration-150 ease-out
+  }
+  .navAcct {
+    @apply mt-2 border-blue-500 border-2 rounded-full px-4 py-1 text-blue-500 cursor-pointer hover:bg-blue-600 hover:text-white transition-all duration-150 ease-out
+  }
+  .navAcctActive {
+    @apply text-white bg-gradient-to-tr from-blue-500 to-blue-800 hover:brightness-110
+  }
+  .heroBtn {
+    @apply my-4 bg-gradient-to-br from-white to-gray-100 py-3 px-8 rounded-full shadow-xl text-blue-600 font-semibold hover:bg-gradient-to-br hover:from-blue-500 hover:to-blue-700 hover:text-white transition-all transform duration-200 ease-out sm:text-lg
+  }
+}
