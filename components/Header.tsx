@@ -1,11 +1,28 @@
-import Link from "next/link";
-import React from "react";
 import { ShoppingCartIcon, ViewGridAddIcon } from "@heroicons/react/outline";
-import { useRouter } from 'next/router'
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { userState } from "../atoms/userAtom";
+import { userService } from "../utils/auth";
 
 const Header = () => {
   const router = useRouter();
-  const user = false;
+  const [user, setUser] = useRecoilState(userState);
+  const isRoot = user && user?.role === "root"
+  const isAdmin = user && user?.role === "admin"
+
+  const isRootOrAdmin = isRoot || isAdmin
+
+  useEffect(() => {
+    const subscription = userService.user.subscribe((x) => setUser(x));
+    return () => subscription.unsubscribe();
+  }, []);
+
+  function logout() {
+    userService.logout();
+    setUser(null)
+  }
 
   function isActive(route: string) {
     return route === router.pathname;
@@ -23,9 +40,9 @@ const Header = () => {
                 src="https://res.cloudinary.com/dtram9qiy/image/upload/v1656108050/my-upload/aesl0cjta4x3zxymqtxo.png"
                 alt="Next Commerce Logo"
               />
-              <h1
-                className="hidden sm:inline cursor-pointer text-2xl mt-1 font-semibold"
-              >Furniture Barn</h1>
+              <h1 className="hidden sm:inline cursor-pointer text-2xl mt-1 font-semibold">
+                Furniture Barn
+              </h1>
             </div>
           </Link>
           <Link href="/cart">
@@ -39,7 +56,7 @@ const Header = () => {
               <h3 className="navLink">Cart</h3>
             </span>
           </Link>
-          {user && (
+          {isRootOrAdmin && (
             <Link href="/create">
               <span
                 className={`${
@@ -59,7 +76,9 @@ const Header = () => {
         {/* Right Side */}
         <div className="flex items-center space-x-3 sm:space-x-5">
           {user ? (
-            <h3 className="mt-2 hover:text-blue-500 font-medium transition-colors duration-150 ease-out cursor-pointer">
+            <h3
+              onClick={logout}
+              className="mt-2 hover:text-blue-500 font-medium transition-colors duration-150 ease-out cursor-pointer">
               Sign Out
             </h3>
           ) : (

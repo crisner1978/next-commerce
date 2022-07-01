@@ -13,11 +13,10 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const products: IProduct[] = await Product.find()
-    console.log(products);
     res.status(200).json(products);
   } else {
     res
       .status(405)
-      .send("Only 'GET' method allowed for this route");
+      .send("Only 'GET' method allowed for this route!");
   }
 }

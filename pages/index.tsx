@@ -4,14 +4,15 @@ import Head from "next/head";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import { IProduct } from "../typings";
-import baseUrl from "../utils/baseUrl";
-import { truncate } from "../utils/helperFunctions";
+// import { userService } from "../utils/auth";
+import baseUrl from "../utils/baseUrl"
+
 interface Props {
   products: IProduct[]
 }
 
 const Home = ({ products }: Props) => {
-
+// console.log(userService.userValue)
   return (
     <div className="">
       <Head>
@@ -39,10 +40,12 @@ export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
   const response = await axios.get(`${baseUrl}/api/products`);
-  
+
   return {
     props: {
       products: response.data
-    }
+    },
+    revalidate: 60,
   }
 }
+

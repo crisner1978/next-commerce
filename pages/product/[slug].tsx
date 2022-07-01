@@ -1,7 +1,11 @@
 import { TrashIcon } from "@heroicons/react/outline";
 import { GetStaticProps } from "next";
 import Image from "next/image";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { deleteModalState } from "../../atoms/deleteModalAtom";
+import { userState } from "../../atoms/userAtom";
 import AddProduct from "../../components/AddProduct";
+import DeleteModal from "../../components/DeleteModal";
 import Product from "../../models/Product";
 import { IProduct } from "../../typings";
 import dbConnect from "../../utils/dbConnect";
@@ -11,7 +15,12 @@ interface Props {
 }
 
 const ProductPage = ({ product }: Props) => {
-  console.log("product", product);
+  const [isOpen, setOpen] = useRecoilState(deleteModalState);
+  const user = useRecoilValue(userState);
+  const isRoot = user && user?.role === "root";
+  const isAdmin = user && user?.role === "admin";
+
+  const isRootOrAdmin = isRoot || isAdmin;
 
   return (
     <main className="max-w-4xl mx-auto px-5 sm:px-8">
@@ -19,11 +28,12 @@ const ProductPage = ({ product }: Props) => {
         <div className="relative h-96 sm:h-80 sm:w-96 rounded-xl mb-4 sm:mb-0">
           <Image
             className="rounded-xl"
-            src={product.mediaUrl}
+            src={product.image}
             layout="fill"
             objectFit="cover"
             objectPosition="bottom"
             alt={product.name}
+            priority={true}
           />
         </div>
         <div className="flex flex-col justify-center space-y-4 w-fit">
@@ -40,10 +50,21 @@ const ProductPage = ({ product }: Props) => {
           <h3 className="text-xl font-semibold">About this product</h3>
         </header>
         <p className="text-lg">{product.description}</p>
-        <button className="flex items-center p-2 bg-red-600 text-white px-4 rounded-md">
-          <TrashIcon className="h-5 w-5 mr-2" />
-          Delete Product
-        </button>
+        {isRootOrAdmin && (
+          <>
+            <button
+              onClick={() => setOpen(true)}
+              className="flex items-center p-2 bg-red-600 text-white px-4 rounded-md">
+              <TrashIcon className="h-5 w-5 mr-2" />
+              Delete Product
+            </button>
+            <DeleteModal
+              onClick={setOpen}
+              isOpen={isOpen}
+              productId={product._id}
+            />
+          </>
+        )}
       </div>
     </main>
   );
@@ -66,7 +87,7 @@ export default ProductPage;
 // }
 
 export const getStaticPaths = async () => {
-  await dbConnect();
+  dbConnect();
 
   const data = await Product.find();
   const products = JSON.parse(JSON.stringify(data));
@@ -76,7 +97,6 @@ export const getStaticPaths = async () => {
     },
   }));
 
-  console.log("paths", paths);
   return {
     paths,
     fallback: false,
@@ -84,13 +104,11 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  console.log("query", params);
   await dbConnect();
 
   const data = await Product.findOne({ _id: params?.slug });
   const product = JSON.parse(JSON.stringify(data));
 
-  console.log("product", product);
   return {
     props: {
       product,

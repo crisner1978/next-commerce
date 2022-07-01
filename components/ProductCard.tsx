@@ -11,7 +11,7 @@ const ProductCard = ({ product }: Props) => {
       <div className="group cursor-pointer overflow-hidden rounded-lg border shadow-md">
         <img
           className="transition transform duration-200 ease-in-out group-hover:scale-105"
-          src={product.mediaUrl}
+          src={product.image}
           alt={product.name}
         />
         <div className="bg-white group-hover:bg-gray-50 p-4 space-y-4 flex flex-col justify-evenly">
