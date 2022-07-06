@@ -47,7 +47,7 @@ export default function GetStartedPage() {
 
     setTimeout(() => {
       setSuccess(false);
-    }, 5000);
+    }, 3000);
 
     return data;
   }

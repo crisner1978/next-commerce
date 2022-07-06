@@ -30,6 +30,14 @@ export default function CreatePage() {
     isProduct ? setDisabled(false) : setDisabled(true);
   }, [name, info, price, uploadFile]);
 
+  useEffect(() => {
+    let timeout: NodeJS.Timeout | undefined;
+    if (isSuccess) {
+      timeout = setTimeout(() => setSuccess(false), 3000)
+    }
+    return () => clearTimeout(timeout)
+  }, [isSuccess])
+
   // function to create new Product
   async function createProduct() {
     const imageUrl = await handleImageUpload();
@@ -45,12 +53,7 @@ export default function CreatePage() {
     const data = await result.data;
 
     setSuccess(true);
-
     toast.success("Product Created Successfully!");
-
-    setTimeout(() => {
-      setSuccess(false);
-    }, 5000);
 
     return data;
   }

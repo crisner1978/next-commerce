@@ -1,7 +1,7 @@
 import { ObjectId } from "mongoose";
 
 export interface IProduct extends ProductBody {
-  _id: string;
+  _id?: string;
 }
 
 export type ProductBody = {
@@ -23,6 +23,8 @@ export type UserBody = {
   password: string;
   role?: string;
   token?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IAuthUser {
@@ -44,6 +46,7 @@ export type CartBody = {
 }
 
 type CartProduct = {
+  _id?: string;
   quantity: number;
-  product: ObjectId | string;
+  product: IProduct;
 }

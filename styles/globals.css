@@ -29,4 +29,8 @@
     disabled:hover:bg-transparent hover:bg-orange-600 border-orange-600 border-2 text-orange-600 
     hover:text-white font-semibold transition-all duration-150 ease-out px-4 rounded-md
   }
+  .checkoutBtn {
+    @apply flex items-center gap-x-2 font-semibold p-2 px-4 bg-teal-500/80 text-white shadow-md
+    rounded-md disabled:border-gray-400 disabled:border disabled:text-gray-400 disabled:bg-transparent
+  }
 }
