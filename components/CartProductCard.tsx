@@ -1,17 +1,15 @@
 import { XCircleIcon } from "@heroicons/react/outline";
 import Image from "next/image";
-import { MouseEventHandler } from "react";
 import { CartProduct } from "../typings";
 import MyLink from "./MyLink";
 
 type Props = {
   p: CartProduct;
   index: number;
-  onClick?: (arg0: string | undefined) => {}
-}
+  onClick?: (arg0: string | undefined) => {};
+};
 
 const CartProductCard = ({ p, index, onClick }: Props) => {
-
   return (
     <>
       <div className="sm:flex pt-12 pb-8 gap-8">
@@ -33,6 +31,7 @@ const CartProductCard = ({ p, index, onClick }: Props) => {
               {p.quantity} x ${p.product.price}
             </p>
           </div>
+          {/* Delete Product Button */}
           <button
             onClick={() => onClick?.(p?.product?._id)}
             className="group border h-fit p-2 ml-2 rounded-lg bg-gray-100 hover:scale-110 hover:bg-white

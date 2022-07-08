@@ -16,14 +16,15 @@ import { DotSpinner } from "@uiball/loaders";
 import toast from "react-hot-toast";
 
 interface Props {
-  productId: IProduct;
+  productId: string;
 }
 
-const AddProduct = ({ productId: product }: Props) => {
+const AddProduct = ({ productId }: Props) => {
+  console.log(productId)
   const [quantity, setQuantity] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string>('')
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const user = useRecoilValue(userState);
   const router = useRouter();
 
@@ -38,10 +39,10 @@ const AddProduct = ({ productId: product }: Props) => {
   async function addProduct() {
     try {
       setLoading(true);
-      setErrorMsg("")
+      setErrorMsg("");
       const token = Cookies.get("token");
       const url = `${baseUrl}/api/cart`;
-      const payload: CartProduct = { quantity, product };
+      const payload = { quantity, productId };
 
       if (token) {
         const headers = { headers: { Authorization: token } };
@@ -72,7 +73,9 @@ const AddProduct = ({ productId: product }: Props) => {
       <button
         disabled={(user && success) || loading}
         onClick={user ? addProduct : () => router.push("/get-started")}
-        className={`${user ? "bg-orange-500" : "bg-blue-600"} flex items-center p-2 
+        className={`${
+          user ? "bg-orange-500" : "bg-blue-600"
+        } flex items-center p-2 
         px-4 text-white rounded-r-md whitespace-nowrap relative disabled:bg-blue-600`}>
         {user && success ? (
           <>

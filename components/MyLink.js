@@ -7,7 +7,7 @@ const MyLink = ({ href, name, ...rest }) => {
     <Link href={href} passHref>
       <a
         {...rest}
-        className="text-blue-600 text-2xl font-semibold hover:translate-x-[5px] transition-all transform ease-out duration-300"
+        className="text-blue-600 text-lg font-semibold hover:translate-x-[5px] transition-all transform ease-out duration-300"
       >
         {name}
       </a>

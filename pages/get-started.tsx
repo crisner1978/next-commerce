@@ -147,7 +147,7 @@ export default function GetStartedPage() {
               Get Started
             </button>
           </div>
-          <div className="flex items-center p-6 border-2 border-t-0 border-gray-400 rounded-b-md bg-orange-50 font-semibold space-x-3">
+          <div className="flex items-center p-6 border-2 border-t-0 border-gray-400 rounded-b-md bg-orange-50 font-semibold space-x-3 text-lg">
             <QuestionMarkCircleIcon className="h-6 w-6" />
             <h3>
               Existing user?{" "}

@@ -1,7 +1,7 @@
 import { ObjectId } from "mongoose";
 
 export interface IProduct extends ProductBody {
-  _id?: string;
+  _id: string;
 }
 
 export type ProductBody = {

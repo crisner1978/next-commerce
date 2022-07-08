@@ -1,5 +1,10 @@
 import {
-  ExclamationCircleIcon, KeyIcon, LockClosedIcon, LoginIcon, MailIcon, QuestionMarkCircleIcon
+  ExclamationCircleIcon,
+  KeyIcon,
+  LockClosedIcon,
+  LoginIcon,
+  MailIcon,
+  QuestionMarkCircleIcon,
 } from "@heroicons/react/outline";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -18,7 +23,7 @@ export default function SigninPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     const userInfo = { email, password };
@@ -28,22 +33,22 @@ export default function SigninPage() {
 
   useEffect(() => {
     if (userService.userValue) {
-      router.push('/')
+      router.push("/");
     }
-  })
+  });
 
   async function loginUser() {
     const userInfo: IAuthUser = {
       email,
       password,
     };
-    const result = await axios.post(`${baseUrl}/api/signin`, userInfo)
-    const data = await result.data
-    userService.login(data)
-    
+    const result = await axios.post(`${baseUrl}/api/signin`, userInfo);
+    const data = await result.data;
+    userService.login(data);
+
     toast.success("Welcome Back!");
-    return data
-  } 
+    return data;
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -74,7 +79,9 @@ export default function SigninPage() {
         {Boolean(error) && (
           <header className="flex items-center space-x-3 p-4 mb-4 border-2 rounded-md bg-gray-100 shadow-sm">
             <ExclamationCircleIcon className="h-10 w-10 text-red-500" />
-            <h1 className="text-2xl font-semibold text-red-500">Oops, {error}</h1>
+            <h1 className="text-2xl font-semibold text-red-500">
+              Oops, {error}
+            </h1>
           </header>
         )}
         <form onSubmit={handleSubmit} className="flex flex-col pb-8 mb-12">
@@ -120,15 +127,14 @@ export default function SigninPage() {
               Sign In
             </button>
           </div>
-          <div className="flex items-center p-6 border-2 border-t-0 border-gray-400 rounded-b-md bg-orange-50 font-semibold space-x-3">
-          <QuestionMarkCircleIcon className="h-6 w-6" />
+          <div className="flex items-center p-6 border-2 border-t-0 border-gray-400 rounded-b-md bg-orange-50 font-semibold space-x-3 text-lg">
+            <QuestionMarkCircleIcon className="h-6 w-6" />
             <h3>
               New user?{" "}
               <MyLink
                 href="/get-started"
                 className="text-blue-600"
                 name="Get started here"
-                active
               />{" "}
               instead
             </h3>

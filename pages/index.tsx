@@ -4,6 +4,7 @@ import Head from "next/head";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import { IProduct } from "../typings";
+import { userService } from "../utils/auth";
 // import { userService } from "../utils/auth";
 import baseUrl from "../utils/baseUrl"
 
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const Home = ({ products }: Props) => {
-// console.log(userService.userValue)
+console.log(userService.userValue)
   return (
     <div className="">
       <Head>

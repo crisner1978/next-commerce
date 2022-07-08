@@ -1,19 +1,33 @@
-import { ShoppingBagIcon } from "@heroicons/react/outline";
+import { BadgeCheckIcon, ShoppingBagIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
-import { MouseEventHandler } from "react";
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms/userAtom";
-import { CartBody, CartProduct, ICart, IProduct, ProductBody } from "../typings";
+import { CartProduct } from "../typings";
 import CartProductCard from "./CartProductCard";
 
 interface Props {
   products: CartProduct[];
-  onClick?: (arg0: string | undefined) => {}
+  success: boolean;
+  message: string;
+  onClick?: (arg0: string | undefined) => {};
 }
 
-const CartProductList = ({ products, onClick }: Props) => {
+const CartProductList = ({ products, onClick, success, message }: Props) => {
   const user = useRecoilValue(userState);
   const router = useRouter();
+
+  console.log("success", success)
+
+  if (success) {
+    return (
+      <header className="flex items-center space-x-3 p-4 mb-4 border-2 rounded-md bg-gray-100 shadow-sm">
+        <BadgeCheckIcon className="h-10 w-10 text-green-500" />
+        <h1 className="text-xl font-semibold">
+          {message}
+        </h1>
+      </header>
+    );
+  }
 
   if (products.length === 0) {
     return (
@@ -40,11 +54,11 @@ const CartProductList = ({ products, onClick }: Props) => {
   } else {
     return (
       <>
-      {products.map((p: CartProduct, index) => (
-        <CartProductCard onClick={onClick} key={p._id} p={p} index={index} />
-      ))}
+        {products.map((p: CartProduct, index) => (
+          <CartProductCard onClick={onClick} key={p._id} p={p} index={index} />
+        ))}
       </>
-    )
+    );
   }
 };
 
