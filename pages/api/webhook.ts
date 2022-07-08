@@ -38,6 +38,17 @@ async function webhookHandler(
       console.log(`Webhook error: ${error.message}`)
       return res.status(400).send(`Webhook error: ${error.message}`)
     }
+    switch (event.type) {
+      case 'order.payment_succeeded':
+        const order = event.data.object;
+        console.log("order event", order)
+        // Then define and call a function to handle the event order.payment_succeeded
+        break;
+      // ... handle other event types
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
     console.log("Event Success", event)
     res.status(200).send('')
   }
