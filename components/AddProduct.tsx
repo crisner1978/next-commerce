@@ -16,7 +16,7 @@ import { DotSpinner } from "@uiball/loaders";
 import toast from "react-hot-toast";
 
 interface Props {
-  productId: IProduct;
+  productId: string;
 }
 
 const AddProduct = ({ productId: product }: Props) => {
@@ -41,7 +41,7 @@ const AddProduct = ({ productId: product }: Props) => {
       setErrorMsg("")
       const token = Cookies.get("token");
       const url = `${baseUrl}/api/cart`;
-      const payload: CartProduct = { quantity, product };
+      const payload = { quantity, product };
 
       if (token) {
         const headers = { headers: { Authorization: token } };

@@ -8,7 +8,7 @@ const cors = Cors({
   allowMethods: ["POST", "HEAD"],
 });
 
-const webhookSecret = process.env.WEBHOOK_SECRET;
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2020-08-27",
 });
@@ -23,15 +23,15 @@ async function webhookHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
   if (req.method === "POST") {
     const buf = await buffer(req);
     const sig = req.headers["stripe-signature"];
+    const webhookSecret = process.env.WEBHOOK_SECRET;
 
-    console.log(req.body);
     let event;
 
     try {
       if (!sig || !webhookSecret) return;
 
       event = stripe.webhooks.constructEvent(
-        buf.toString(),
+        buf,
         sig,
         webhookSecret
       );
@@ -44,6 +44,11 @@ async function webhookHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
         const charge = event.data.object;
         console.log("charge event", charge)
         // Then define and call a function to handle the event charge.succeeded
+        // 1) Find user by email and get users _id
+        // 2) Find users cart by userId
+        // 3) compare cart total to charge event amount
+        // 4) if equal, add order to database
+        // 5) Clear products from users Cart
         break;
       case "order.payment_succeeded":
         const order = event.data.object;

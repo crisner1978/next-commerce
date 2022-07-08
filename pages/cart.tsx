@@ -1,7 +1,8 @@
 import { Elements } from "@stripe/react-stripe-js";
 import {
   Appearance,
-  loadStripe, StripeElementsOptions
+  loadStripe,
+  StripeElementsOptions,
 } from "@stripe/stripe-js";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -18,7 +19,8 @@ interface Props {
   products: CartProduct[];
 }
 const stripePromise = loadStripe(
-  `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
+  `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
+  
 );
 
 export default function CartPage({ products }: Props) {
@@ -28,8 +30,8 @@ export default function CartPage({ products }: Props) {
   const [success, setSuccess] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
-  console.log("cartProducts", products)
-  
+  // console.log("cartProducts", products);
+
   useEffect(() => {
     const url = `${baseUrl}/api/create-payment-intent`;
     const token = Cookies.get("token");
@@ -86,7 +88,7 @@ export default function CartPage({ products }: Props) {
             <Elements
               options={options}
               stripe={stripePromise}
-              key={clientSecret}>
+              >
               <CartSummary
                 setSuccess={setSuccess}
                 setMessage={setMessage}
@@ -103,7 +105,6 @@ export default function CartPage({ products }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { token } = req.cookies;
-  
 
   if (!token) {
     return { props: { products: [] } };
@@ -111,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const payload = { headers: { Authorization: token } };
     const url = `${baseUrl}/api/cart`;
     const response = await axios.get(url, payload);
-    console.log("responseresponse",response.data)
+    
     return {
       props: {
         products: response.data,

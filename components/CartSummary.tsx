@@ -1,5 +1,6 @@
 import { CreditCardIcon, ShoppingCartIcon } from "@heroicons/react/outline";
 import {
+  CardElement,
   PaymentElement,
   useElements,
   useStripe,
@@ -26,6 +27,7 @@ import toast from "react-hot-toast";
 import scrollToRef from "../utils/scrollToRef";
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms/userAtom";
+import stripeSuccessMethodHandler from "../utils/stripeSuccessMethodHandler";
 
 interface Props {
   products: CartProduct[];
@@ -43,6 +45,9 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
   const [isEmpty, setEmpty] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const paymentRef = useRef<HTMLHRElement>(null);
+  const [street, setStreet] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [zipcode, setZipcode] = useState<string>("");
   const stripe = useStripe();
   const elements = useElements();
 
@@ -70,6 +75,9 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
       "payment_intent_client_secret"
     );
 
+    console.log("useEffect client", clientSecret)
+    console.log("success", success)
+
     if (!clientSecret) return;
 
     stripe
@@ -77,7 +85,7 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
       .then(({ paymentIntent }: PaymentIntentResult) => {
         switch (paymentIntent?.status) {
           case "succeeded":
-            return setMessage("Payment succeeded!");
+            return stripeSuccessMethodHandler(paymentIntent, setMessage, setSuccess, user);
           case "processing":
             return setMessage("Your payment is processing");
           case "requires_payment_method":
@@ -96,29 +104,37 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
   ) {
     e.preventDefault();
     if (!stripe || !elements) return;
-    let paymentData = {
-      products,
-      email: user?.email,
-      id: user?._id
-    };
+
     setLoading(true);
 
     try {
-      const { error } = await stripe.confirmPayment({
+      await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: baseUrl!,
+          return_url: `${baseUrl}/cart`,
+          shipping: {
+            name: user?.name || "Not provided",
+            address: {
+              line1: street,
+              city: city,
+              postal_code: zipcode,
+            },
+          },
+          receipt_email: user?.email,
+          payment_method_data: {
+            billing_details: {
+              address: {
+                line1: street,
+                city: city,
+                postal_code: zipcode,
+              },
+              name: user?.name,
+              email: user?.email,
+            }
+          },
         },
-      });
+      })
 
-      if (!error) {
-        const url = `${baseUrl}/api/checkout`;
-        const token = Cookies.get("token")!;
-        const payload = { paymentData };
-        const headers = { headers: { Authorization: token } };
-        await axios.post(url, payload, headers);
-        setSuccess(true);
-      }
     } catch (error) {
       catchErrors(error, setErrorMsg);
       toast.error(errorMsg ? errorMsg : "Something went wrong!");
@@ -137,6 +153,7 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
         </div>
         <div className="flex flex-col justify-center p-5">
           <button
+            disabled={success}
             onClick={() => setOpen(!open)}
             className="readyBtn whitespace-nowrap">
             <CreditCardIcon className="h-5 w-5" />
@@ -150,10 +167,52 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
       {open && (
         <form onSubmit={handleCheckout}>
           <PaymentElement
-            id="payment-element"
-            className="p-5 border-2 border-b-0 rounded-t-md"
+            className="px-5 pt-5 pb-3 border-2 border-b-0 rounded-t-md"
           />
-          <div className="flex justify-end px-5 pb-5 border-2 border-t-0 rounded-md">
+          
+          <div className="px-5 border-x-2 flex flex-col">
+            <p className="font-semibold text-lg pb-1">Shipping Address</p>
+            <label className="text-gray-700" htmlFor="street">
+              Street Address
+            </label>
+            <input
+              onChange={(e) => setStreet(e.target.value)}
+              value={street}
+              className="placeholder:text-gray-500 placeholder:text-[17px] rounded-md mt-0.5 border-2 py-2 px-3 focus:ring-[3px] focus:ring-blue-200 outline-none"
+              type="text"
+              name="street"
+              placeholder="Street"
+            />
+            <div className="grid grid-cols-2 gap-[11px]">
+              <label
+                className="text-gray-700 pt-3 flex flex-col"
+                htmlFor="city">
+                City
+                <input
+                  onChange={(e) => setCity(e.target.value)}
+                  value={city}
+                  className="placeholder:text-gray-500 placeholder:text-[17px] rounded-md mt-0.5 border-2 py-2 px-3 focus:ring-[3px] focus:ring-blue-200 outline-none"
+                  type="text"
+                  name="city"
+                  placeholder="City"
+                />
+              </label>
+              <label
+                className="text-gray-700 pt-3 flex flex-col"
+                htmlFor="zipcode">
+                Zip Code
+                <input
+                  onChange={(e) => setZipcode(e.target.value)}
+                  value={zipcode}
+                  className="placeholder:text-gray-500 placeholder:text-[17px] rounded-md mt-0.5 border-2 py-2 px-3 focus:ring-[3px] focus:ring-blue-200 outline-none"
+                  type="text"
+                  name="zipcode "
+                  placeholder="Zip Code"
+                />
+              </label>
+            </div>
+          </div>
+          <div className="flex justify-end px-5 py-5 border-2 border-t-0 rounded-md">
             <button
               type="submit"
               disabled={isEmpty || success}

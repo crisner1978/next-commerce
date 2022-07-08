@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Home = ({ products }: Props) => {
-console.log(userService.userValue)
+// console.log(userService.userValue)
   return (
     <div className="">
       <Head>

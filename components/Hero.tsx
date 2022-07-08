@@ -11,8 +11,8 @@ const Hero = () => {
         layout="fill"
         objectFit="cover"
         objectPosition="top"
-        placeholder="blur"
-        blurDataURL="https://res.cloudinary.com/dtram9qiy/image/upload/v1656246620/my-upload/i5l1ligj8yhiskxpae9s.jpg"
+        // placeholder="blur"
+        // blurDataURL="https://res.cloudinary.com/dtram9qiy/image/upload/v1656246620/my-upload/i5l1ligj8yhiskxpae9s.jpg"
         priority={true}
       />
       <header className="absolute top-1/4 w-full text-center">

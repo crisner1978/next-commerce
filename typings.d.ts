@@ -5,6 +5,7 @@ export interface IProduct extends ProductBody {
 }
 
 export type ProductBody = {
+  _id?: string;
   name: string;
   price: number;
   description: string;

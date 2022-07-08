@@ -108,7 +108,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const data = await Product.findOne({ _id: params?.slug });
   const product = JSON.parse(JSON.stringify(data));
-
+console.log(product)
   return {
     props: {
       product,

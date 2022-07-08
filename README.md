@@ -21,3 +21,13 @@ pnpm create next-app --example with-tailwindcss with-tailwindcss-app
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+
+
+## Todo items
+
+Then define and call a function to handle the event charge.succeeded
+1) Find user by email and get users _id
+2) Find users cart by userId
+3) compare cart total to charge event amount
+4) if equal, add order to database
+5) Clear products from users Cart

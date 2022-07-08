@@ -155,7 +155,6 @@ export default function GetStartedPage() {
                 href="/signin"
                 className="text-blue-600"
                 name="Sign in here"
-                active
               />{" "}
               instead
             </h3>
