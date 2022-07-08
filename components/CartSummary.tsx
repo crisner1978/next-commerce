@@ -143,6 +143,8 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
     }
   }
 
+  if (products.length === 0) return null
+  
   return (
     <>
       <section className="border-2 rounded-md flex justify-between">

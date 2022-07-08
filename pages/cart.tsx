@@ -70,6 +70,8 @@ export default function CartPage({ products }: Props) {
     appearance,
   };
 
+  
+
   return (
     <div>
       <main className="px-5 sm:px-8 pb-12">
