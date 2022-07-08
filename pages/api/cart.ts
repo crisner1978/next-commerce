@@ -38,12 +38,15 @@ async function getCart(req: NextApiRequest, res: NextApiResponse<Data>) {
     const token = `${req.headers.authorization}`;
     const secret = `${process.env.JWT_SECRET}`;
 
+
+
     const { userId } = jwt.verify(token, secret) as DecodedToken;
+    
     const cart = await Cart.findOne({ user: userId }).populate({
       path: "products.product",
       model: "Product",
     });
-
+    
     res.status(200).json(cart.products);
   } catch (error) {
     console.error(error);
@@ -108,10 +111,11 @@ async function deleteItemFromCart(
       { user: userId },
       { $pull: { products: { product: productId } } },
       { new: true }
-    ).populate({ 
-      path: "products.product", 
-      model: "Product" });
-      res.status(200).json(cart.products)
+    ).populate({
+      path: "products.product",
+      model: "Product",
+    });
+    res.status(200).json(cart.products);
   } catch (error) {
     console.error(error);
     res.status(403).send("Please sign in again");

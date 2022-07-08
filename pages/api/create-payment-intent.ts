@@ -16,7 +16,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { products } = req.body;
 
   try {
     // 1) Verify and get userId from token
@@ -47,6 +46,5 @@ export default async function handler(
   } catch (error) {
     console.error(error)
   }
-
   // Create a PaymentIntent with the order amount and currency
 }

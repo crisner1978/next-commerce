@@ -28,6 +28,8 @@ export default function CartPage({ products }: Props) {
   const [success, setSuccess] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
+  console.log("cartProducts", products)
+  
   useEffect(() => {
     const url = `${baseUrl}/api/create-payment-intent`;
     const token = Cookies.get("token");
@@ -101,6 +103,7 @@ export default function CartPage({ products }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { token } = req.cookies;
+  
 
   if (!token) {
     return { props: { products: [] } };
@@ -108,7 +111,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const payload = { headers: { Authorization: token } };
     const url = `${baseUrl}/api/cart`;
     const response = await axios.get(url, payload);
-
+    console.log("responseresponse",response.data)
     return {
       props: {
         products: response.data,

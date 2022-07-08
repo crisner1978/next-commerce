@@ -16,7 +16,6 @@ const CartProductList = ({ products, onClick, success, message }: Props) => {
   const user = useRecoilValue(userState);
   const router = useRouter();
 
-  console.log("success", success)
 
   if (success) {
     return (
