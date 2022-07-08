@@ -26,7 +26,7 @@ console.log(userService.userValue)
         <section className="pt-6 pb-12">
           <h2 className="text-4xl font-semibold pb-8">Furniture Barn Home</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {products.map((product) => (
+            {products?.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
           </div>
