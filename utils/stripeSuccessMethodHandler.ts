@@ -29,7 +29,7 @@ export default async function stripeSuccessMethodHandler(
     } catch (error) {
       console.error(error);
     } finally {
-      console.log(count)
+      // console.log(count)
     }
   }
 }

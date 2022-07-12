@@ -45,7 +45,7 @@ async function getUsers(req: NextApiRequest, res: NextApiResponse) {
       res.status(404).send("User not found!");
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(403).send("Invalid token");
   }
 }

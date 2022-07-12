@@ -45,7 +45,7 @@ export default async function handler(
       email: data.email,
       password: hash,
     }).save();
-    console.log("newUser", newUser)
+    // console.log("newUser", newUser)
     // 5) create cart for new user
     await new Cart({ user: newUser._id }).save()
 
