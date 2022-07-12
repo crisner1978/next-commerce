@@ -37,7 +37,7 @@ const CartProductList = ({ products, onClick, success, message }: Props) => {
         </header>
         {user ? (
           <button
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/?page=1")}
             className="grid mx-auto bg-orange-400 p-2 px-4 rounded-md shadow-md hover:bg-orange-500 transition-all transform duration-200 ease-out font-semibold">
             View Products
           </button>

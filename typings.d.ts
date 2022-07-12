@@ -26,6 +26,7 @@ export type UserBody = {
   token?: string;
   createdAt?: string;
   updatedAt?: string;
+  image?: string;
 }
 
 export interface IAuthUser {
@@ -50,4 +51,18 @@ type CartProduct = {
   _id?: string;
   quantity: number;
   product: IProduct;
+}
+
+
+export interface IOrder extends Order {
+  _id: string
+}
+
+export type Order = {
+  createdAt: string;
+  updatedAt: string;
+  products: CartProduct[];
+  total: number;
+  email: string;
+  user: IUser;
 }

@@ -11,7 +11,7 @@ import dbConnect from "../../utils/dbConnect";
 
 dbConnect();
 
-type Data = UserBody | string;
+type Data = UserBody | string | object;
 
 export default async function handler(
   req: NextApiRequest,
@@ -57,7 +57,7 @@ export default async function handler(
         expiresIn: "7d",
       }
     );
-    res.status(201).json(token);
+    res.status(201).json({token, name: newUser.name, email: newUser.email});
     // 7) send back the token
   } catch (error) {
     console.error(error);

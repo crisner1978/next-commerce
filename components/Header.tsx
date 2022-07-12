@@ -1,4 +1,8 @@
-import { ShoppingCartIcon, ViewGridAddIcon } from "@heroicons/react/outline";
+import {
+  LogoutIcon,
+  ShoppingCartIcon,
+  ViewGridAddIcon,
+} from "@heroicons/react/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -9,10 +13,10 @@ import { userService } from "../utils/auth";
 const Header = () => {
   const router = useRouter();
   const [user, setUser] = useRecoilState(userState);
-  const isRoot = user && user?.role === "root"
-  const isAdmin = user && user?.role === "admin"
+  const isRoot = user && user?.role === "root";
+  const isAdmin = user && user?.role === "admin";
 
-  const isRootOrAdmin = isRoot || isAdmin
+  const isRootOrAdmin = isRoot || isAdmin;
 
   useEffect(() => {
     const subscription = userService.user.subscribe((x) => setUser(x));
@@ -21,7 +25,7 @@ const Header = () => {
 
   function logout() {
     userService.logout();
-    setUser(null)
+    setUser(null);
   }
 
   function isActive(route: string) {
@@ -33,7 +37,7 @@ const Header = () => {
       <nav className="flex justify-between">
         {/* Left Side */}
         <div className="flex items-center space-x-2 md:space-x-5">
-          <Link href="/">
+          <Link href="/?page=1">
             <div className="flex items-center">
               <img
                 className="w-14 object-contain cursor-pointer"
@@ -76,11 +80,14 @@ const Header = () => {
         {/* Right Side */}
         <div className="flex items-center space-x-3 sm:space-x-5">
           {user ? (
-            <h3
-              onClick={logout}
-              className="mt-2 hover:text-blue-500 font-medium transition-colors duration-150 ease-out cursor-pointer">
-              Sign Out
-            </h3>
+            <span className="flex flex-1 items-center mt-2 cursor-pointer gap-1 group">
+              <LogoutIcon onClick={logout} className="navIcon sm:hidden" />
+              <h3
+                onClick={logout}
+                className="hidden sm:block hover:text-blue-500 font-medium transition-colors duration-150 ease-out cursor-pointer">
+                Sign Out
+              </h3>
+            </span>
           ) : (
             <Link href="/signin">
               <h3

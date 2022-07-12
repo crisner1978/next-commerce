@@ -1,5 +1,5 @@
 import { TrashIcon } from "@heroicons/react/outline";
-import { GetStaticProps } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, GetStaticProps } from "next";
 import Image from "next/image";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { deleteModalState } from "../../atoms/deleteModalAtom";
@@ -72,47 +72,16 @@ const ProductPage = ({ product }: Props) => {
 
 export default ProductPage;
 
-// export async function getServerSideProps({ query }: GetServerSidePropsContext){
-// console.log("query", query)
-// await dbConnect()
+export const getServerSideProps = async ({ query }: GetServerSidePropsContext) => {
 
-// const data = await Product.findOne({ _id: query._id })
-// const product = JSON.parse(JSON.stringify(data))
+await dbConnect()
 
-//   return {
-//     props: {
-//       product
-//     }
-//   }
-// }
+const data = await Product.findOne({ _id: query.slug })
+const product = JSON.parse(JSON.stringify(data))
 
-export const getStaticPaths = async () => {
-  dbConnect();
-
-  const data = await Product.find();
-  const products = JSON.parse(JSON.stringify(data));
-  const paths = products.map((product: IProduct) => ({
-    params: {
-      slug: product._id.valueOf(),
-    },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  await dbConnect();
-
-  const data = await Product.findOne({ _id: params?.slug });
-  const product = JSON.parse(JSON.stringify(data));
-console.log(product)
   return {
     props: {
-      product,
-    },
-    revalidate: 60,
-  };
-};
+      product
+    }
+  }
+}

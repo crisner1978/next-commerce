@@ -1,9 +1,5 @@
 import { Elements } from "@stripe/react-stripe-js";
-import {
-  Appearance,
-  loadStripe,
-  StripeElementsOptions,
-} from "@stripe/stripe-js";
+import { Appearance, loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { GetServerSideProps } from "next";
@@ -18,10 +14,8 @@ import baseUrl from "../utils/baseUrl";
 interface Props {
   products: CartProduct[];
 }
-const stripePromise = loadStripe(
-  `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
-  
-);
+
+const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`);
 
 export default function CartPage({ products }: Props) {
   const user = useRecoilValue(userState);
@@ -30,9 +24,9 @@ export default function CartPage({ products }: Props) {
   const [success, setSuccess] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
-  // console.log("cartProducts", products);
-
   useEffect(() => {
+    if (products.length === 0) return 
+
     const url = `${baseUrl}/api/create-payment-intent`;
     const token = Cookies.get("token");
     if (token) {
@@ -47,7 +41,7 @@ export default function CartPage({ products }: Props) {
       };
       createPaymentIntent();
     }
-  }, []);
+  }, [products]);
 
   const handleDelete = async (productId: any) => {
     const url = `${baseUrl}/api/cart`;
@@ -70,8 +64,6 @@ export default function CartPage({ products }: Props) {
     appearance,
   };
 
-  
-
   return (
     <div>
       <main className="px-5 sm:px-8 pb-12">
@@ -83,7 +75,6 @@ export default function CartPage({ products }: Props) {
             success={success}
             message={message}
           />
-
           {!user && <hr className="border-gray-300 mx-1 my-5" />}
           {/* Cart item summary */}
           {clientSecret && (

@@ -37,4 +37,7 @@
     @apply flex items-center gap-x-2 font-semibold p-2 px-4 bg-teal-500/80 text-white shadow-md relative
     rounded-md disabled:border-gray-400 disabled:border disabled:text-gray-400 disabled:bg-transparent
   }
+  .paginationBtn {
+    @apply border-2 px-5 py-2 rounded-md hover:scale-110 cursor-pointer transition-all transform duration-200 ease-out text-lg font-semibold disabled:hover:scale-100 disabled:hover:cursor-default
+  }
 }

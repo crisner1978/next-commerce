@@ -5,7 +5,6 @@ import {
 import { PencilIcon, PlusIcon } from "@heroicons/react/solid";
 import { Orbit } from "@uiball/loaders";
 import axios from "axios";
-import { GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { ProductBody } from "../typings";
@@ -33,10 +32,10 @@ export default function CreatePage() {
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
     if (isSuccess) {
-      timeout = setTimeout(() => setSuccess(false), 3000)
+      timeout = setTimeout(() => setSuccess(false), 3000);
     }
-    return () => clearTimeout(timeout)
-  }, [isSuccess])
+    return () => clearTimeout(timeout);
+  }, [isSuccess]);
 
   // function to create new Product
   async function createProduct() {
@@ -85,7 +84,7 @@ export default function CreatePage() {
     try {
       e.preventDefault();
       setLoading(true);
-      setError("")
+      setError("");
 
       await createProduct();
 

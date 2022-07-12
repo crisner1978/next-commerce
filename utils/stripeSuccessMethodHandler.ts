@@ -2,6 +2,7 @@ import { PaymentIntent } from "@stripe/stripe-js";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Dispatch, SetStateAction } from "react";
+import toast from "react-hot-toast";
 import { IUser } from "../typings";
 import baseUrl from "./baseUrl";
 
@@ -16,7 +17,7 @@ export default async function stripeSuccessMethodHandler(
     count++
     setSuccess(true);
     setMessage("Payment Succeeded!");
-
+    toast.success("Thank You! Payment Successful!")
     try {
       const token = Cookies.get("token");
       if (token) {

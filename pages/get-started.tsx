@@ -33,10 +33,17 @@ export default function GetStartedPage() {
     isUser ? setDisabled(false) : setDisabled(true);
   }, [name, email, password]);
 
-  async function createUser() {
-    const userInfo: UserBody = {
-      name, email, password
+  useEffect(() => {
+    let timeout: NodeJS.Timeout | undefined
+    if (isSuccess) {
+      timeout = setTimeout(() => setSuccess(false), 3000)
     }
+    return () => clearTimeout(timeout)
+  }, [isSuccess])
+
+  async function createUser() {
+    const userInfo: UserBody = { name, email, password }
+    
     const result = await axios.post(`${baseUrl}/api/signup`, userInfo);
     const data = await result.data
     userService.login(data)
@@ -44,10 +51,6 @@ export default function GetStartedPage() {
     setSuccess(true);
 
     toast.success("User Created Successfully!");
-
-    setTimeout(() => {
-      setSuccess(false);
-    }, 3000);
 
     return data;
   }

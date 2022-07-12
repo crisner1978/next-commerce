@@ -1,32 +1,16 @@
 import { CreditCardIcon, ShoppingCartIcon } from "@heroicons/react/outline";
-import {
-  CardElement,
-  PaymentElement,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
-import {
-  Dispatch,
-  MouseEvent,
-  RefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-// import StripeCheckout from "react-stripe-checkout";
+import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { PaymentIntentResult } from "@stripe/stripe-js";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { DotSpinner } from "@uiball/loaders";
+import { Dispatch, MouseEvent, SetStateAction, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { useRecoilValue } from "recoil";
+import { userState } from "../atoms/userAtom";
 import { CartProduct } from "../typings";
 import baseUrl from "../utils/baseUrl";
 import calculateTotal from "../utils/calculateTotal";
 import catchErrors from "../utils/catchErrors";
-import { DotSpinner } from "@uiball/loaders";
-import toast from "react-hot-toast";
 import scrollToRef from "../utils/scrollToRef";
-import { useRecoilValue } from "recoil";
-import { userState } from "../atoms/userAtom";
 import stripeSuccessMethodHandler from "../utils/stripeSuccessMethodHandler";
 
 interface Props {
@@ -40,7 +24,6 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
   const user = useRecoilValue(userState);
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [cartAmt, setCartAmt] = useState<string>("");
-  const [stripeAmt, setStripeAmt] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isEmpty, setEmpty] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
@@ -52,10 +35,9 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
   const elements = useElements();
 
   useEffect(() => {
-    const { cartTotal, stripeTotal } = calculateTotal(products);
+    const { cartTotal } = calculateTotal(products);
 
     setCartAmt(cartTotal);
-    setStripeAmt(stripeTotal);
     setEmpty(products.length === 0);
   }, [products]);
 
@@ -70,22 +52,21 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
 
   useEffect(() => {
     if (!stripe) return;
-
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"
     );
-
-    console.log("useEffect client", clientSecret)
-    console.log("success", success)
-
     if (!clientSecret) return;
-
     stripe
       .retrievePaymentIntent(clientSecret)
       .then(({ paymentIntent }: PaymentIntentResult) => {
         switch (paymentIntent?.status) {
           case "succeeded":
-            return stripeSuccessMethodHandler(paymentIntent, setMessage, setSuccess, user);
+            return stripeSuccessMethodHandler(
+              paymentIntent,
+              setMessage,
+              setSuccess,
+              user
+            );
           case "processing":
             return setMessage("Your payment is processing");
           case "requires_payment_method":
@@ -130,11 +111,10 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
               },
               name: user?.name,
               email: user?.email,
-            }
+            },
           },
         },
-      })
-
+      });
     } catch (error) {
       catchErrors(error, setErrorMsg);
       toast.error(errorMsg ? errorMsg : "Something went wrong!");
@@ -143,8 +123,8 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
     }
   }
 
-  if (products.length === 0) return null
-  
+  if (products.length === 0) return null;
+
   return (
     <>
       <section className="border-2 rounded-md flex justify-between">
@@ -168,10 +148,8 @@ const CartSummary = ({ products, success, setSuccess, setMessage }: Props) => {
       />
       {open && (
         <form onSubmit={handleCheckout}>
-          <PaymentElement
-            className="px-5 pt-5 pb-3 border-2 border-b-0 rounded-t-md"
-          />
-          
+          <PaymentElement className="px-5 pt-5 pb-3 border-2 border-b-0 rounded-t-md" />
+
           <div className="px-5 border-x-2 flex flex-col">
             <p className="font-semibold text-lg pb-1">Shipping Address</p>
             <label className="text-gray-700" htmlFor="street">

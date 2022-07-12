@@ -23,7 +23,7 @@ function checkRoleAuth(authUser: { role: string }, path: string) {
   const notPermitted = !(isRoot || isAdmin) && path === "/create"
 
   if (notPermitted) {
-    Router.push("/")
+    Router.push("/?page=1")
   }
 }
 
