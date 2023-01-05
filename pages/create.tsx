@@ -48,6 +48,8 @@ export default function CreatePage() {
       image: imageUrl,
     };
 
+    
+
     const result = await axios.post(`${baseUrl}/api/product`, productInfo);
     const data = await result.data;
 

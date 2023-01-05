@@ -6,7 +6,6 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import baseUrl from "../utils/baseUrl";
 import formatDate from "../utils/formatDate";
-import { truncate } from "../utils/helperFunctions";
 import updatePermission from "../utils/updatePermission";
 import Table from "./Table";
 
@@ -83,7 +82,7 @@ const AccountPermissions = ({ currentUserId }: Props) => {
       accessorKey: "role",
       header: () => <span className="pr-5">Role</span>,
       cell: ({ getValue, row: { index }, column: { id }, table }) => {
-        const initialValue: string = getValue();
+        const initialValue: any = getValue();
 
         // We need to keep and update the state of the cell normally
         const [admin, setAdmin] = useState(initialValue === "admin");

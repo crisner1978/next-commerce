@@ -1,11 +1,10 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import React, { EventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useRecoilState } from "recoil";
 import { userState } from "../atoms/userAtom";
-import { IUser } from "../typings";
 import { userService } from "../utils/auth";
 import baseUrl from "../utils/baseUrl";
 import { toastOptions } from "../utils/toastOptions";

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { Suspense } from "react";
 import Hero from "../components/Hero";

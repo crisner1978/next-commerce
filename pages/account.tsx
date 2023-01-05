@@ -17,18 +17,21 @@ export default function AccountPage({ orders }: Props) {
   const user = useRecoilValue(userState);
 
   return (
-    <>
-      <main className="px-5 sm:px-8 pb-10">
-        <div className="border-2 p-4 mt-4 pb-5 max-w-4xl mx-auto shadow-md rounded-md">
-          {/* Account Header Component */}
-          <AccountHeader user={user} />
-          {/* Account Orders Component */}
-          <AccountOrders orders={orders} />
-          {/* Account Permissions Root User */}
-          {user?.role === "root" && <AccountPermissions currentUserId={user._id} />}
-        </div>
-      </main>
-    </>
+    <main className="px-5 sm:px-8 pb-10">
+      <div className="border-2 p-4 mt-4 pb-5 max-w-4xl mx-auto shadow-md rounded-md">
+        {/* Account Header Component */}
+        <AccountHeader user={user} />
+        {/* Account Orders Component */}
+        <AccountOrders orders={orders} />
+        {/* Account Permissions Root User */}
+        {user?.role === "root" && (
+          <div className="w-[300px]">
+            <AccountPermissions currentUserId={user._id} />
+          </div>
+          
+        )}
+      </div>
+    </main>
   );
 }
 

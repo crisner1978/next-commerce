@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  experimental: {
-    runtime: "experimental-edge",
-  },
   env: {
     BASE_URL:
       process.env.NODE_ENV === "production"
